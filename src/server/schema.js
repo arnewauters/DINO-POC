@@ -67,7 +67,9 @@ var schema = new GraphQLSchema({
           }
         },
         resolve: function(obj, args) {
-          return new CreatePatientHandler().handle(args);
+          return new CreatePatientHandler().handle(args).then(function(res) {
+            return res;
+          });
         }
       }
     }
