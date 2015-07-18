@@ -28,8 +28,8 @@ routes.get('/data', function* () {
 });
 
 routes.post('/data', function* () {
-  var body = yield parseBody.text(this);
-  var resp = yield graphql(schema, body, '', '');
+  var body = yield parseBody.json(this);
+  var resp = yield graphql(schema, body.query, '', body.params);
 
   if (resp.errors) {
     this.status = 400;

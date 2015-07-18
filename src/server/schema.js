@@ -7,6 +7,8 @@ import {
   GraphQLInt
 } from 'graphql/lib/type';
 
+import CreatePatientHandler from './handlers/createPatientHandler'
+
 var patientType = new GraphQLObjectType({
   name: 'Patient',
   fields: {
@@ -19,10 +21,7 @@ var patientType = new GraphQLObjectType({
     },
     firstName: {
       type: GraphQLString,
-      description: 'The first name of the patient.',
-      resolve: function(p) {
-        return p.firstName;
-      }
+      description: 'The first name of the patient.'
     },
     lastName: {
       type: GraphQLString,
@@ -51,6 +50,27 @@ var schema = new GraphQLSchema({
         }
       }
     })
+  }),
+  mutation: new GraphQLObjectType({
+    name: "Mutation",
+    fields: {
+      createPatient: {
+        type: patientType,
+        args: {
+          firstName: {
+            name: 'firstName',
+            type: GraphQLString
+          },
+          lastName: {
+            name: 'lastName',
+            type: GraphQLString
+          }
+        },
+        resolve: function(obj, args) {
+          return new CreatePatientHandler().handle(args);
+        }
+      }
+    }
   })
 });
 
