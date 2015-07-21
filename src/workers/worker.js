@@ -7,10 +7,10 @@ let connection = new EventStoreClient.Connection({
 })
 
 connection.subscribeToStream(
-  '$all',
-  true,
+  '',
+  false,
   (storedEvent) => {
-    console.log('event stored');
+    console.log('event stored: ' + JSON.stringify(storedEvent.data));
   },
   (subscriptionConfirmation) => { 
     console.log('listening to events');
